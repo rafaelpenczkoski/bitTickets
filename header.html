@@ -1,0 +1,13 @@
+<header class="col-md-7 col-centered header clearfix">
+  <nav ng-controller="headerCtrl">
+    <ul class="nav nav-pills float-right">
+      <li class="nav-item">
+        <a class="nav-link" ng-class="{ active: isActive('/tickets')}" href="#!/tickets">Passagens</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" ng-class="{ active: isActive('/cart')}" href="#!/cart">Carrinho</a>
+      </li>
+    </ul>
+  </nav>
+  <h3 class="text-muted">Bit Viagens</h3>
+</header>

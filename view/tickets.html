@@ -1,0 +1,138 @@
+<div class="container">
+	<div class="card col-sm-8 col-centered card-filter">
+		<div class="card-body">
+			<form ng-submit="searchTickets(filter)" name="filterForm">
+				<div class="row">
+					<div class="form-group col-md-6 card-title">
+						<h4 class="card-title">Encontre seu voo</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<input type="radio" ng-model="filter.type" value="both"/>
+						<label>Ida e volta</label>
+					</div>
+					<div class="col-md-3">
+						<input type="radio" ng-model="filter.type" value="oneway"/>
+						<label >Somente ida</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label>Origem</label>
+						<input type="text" id="origin-place" class="form-control" placeholder="Insira a cidade de origem" ng-required="true" ng-model="filter.source"/>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Destino</label>
+						<input type="text" id="destiny-place" class="form-control" placeholder="Insira a cidade de destino" ng-required="true" ng-model="filter.destination"/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-4">
+						<label>Data da ida</label>
+						<input type="date" class="form-control" ng-disabled="isDataGroupDisabled(filter)" ng-required="isDataGroupRequired(filter)"/>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Data da volta</label>
+						<input type="date" class="form-control" ng-disabled="isDataVoltaDisabled(filter)" ng-required="isDataVoltaRequired(filter)"/>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Passageiros</label>
+						<input type="number" class="form-control" ng-model="filter.passengers" ng-disabled="isDataGroupDisabled(filter)" ng-required="isDataGroupRequired(filter)"/>
+					</div>	
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-6">
+						<input  type="checkbox" ng-model="filter.undefinedDate"/>
+						<label>Ainda não defini as datas</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-md-6">
+						<input class="btn btn-primary" type="submit" value="Procurar" />
+					</div>
+				</div>
+			</form>
+  		</div>
+	</div>
+
+<div class="alert alert-warning col-sm-8 col-centered" role="alert" ng-show="filter.error">
+  Não foi localizada nenhuma rota com origem em {{filter.source}} e destino em {{filter.destination}}.
+</div>	
+
+<div class="card col-sm-8 col-centered" ng-show="tickets && !filter.error">
+	<div class="card-body">
+		<h5 class="card-title">{{filter.start}} x {{filter.end}}</h5>
+		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseIda" aria-expanded="false" aria-controls="collapseIda">
+		    Selecione a passagem para IDA
+  		</button>		
+
+		<div class="collapse" id="collapseIda">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Saída</th>
+						<th>Chegada</th>
+						<th>Preço</th>
+						<th>Companhia</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ticket in tickets" ng-class="{rowSelected: ticket.selected 
+																 && ticket.leaveDate == travel.go.leaveDate}">
+						<td ng-bind="ticket.leaveDate | date: 'dd/MM/yyyy HH:mm'"></td>
+						<td ng-bind="ticket.arrivalDate | date: 'dd/MM/yyyy HH:mm'"></td>
+						<td ng-bind="ticket.price | currency"></td>
+						<td>
+							<img ng-src="{{ticket.imageURL}}">
+							<span ng-bind="ticket.company"/>
+						</td>
+						<td><button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseIda" aria-expanded="false" aria-controls="collapseIda" ng-click="chooseGo(ticket)">Selecionar</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="card-body" ng-show="filter.type == 'both'">
+		<h5 class="card-title">{{filter.end}} x {{filter.start}}</h5>
+		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseVolta" aria-expanded="false" aria-controls="collapseVolta">
+		    Selecione a passagem para VOLTA
+  		</button>		
+
+		<div class="collapse" id="collapseVolta">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Saída</th>
+						<th>Chegada</th>
+						<th>Preço</th>
+						<th>Companhia</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ticket in tickets" ng-class="{rowSelected: ticket.selected 
+																 && ticket.leaveDate == travel.back.leaveDate}">
+						<td ng-bind="ticket.leaveDate | date: 'MM/dd/yyyy HH:mm'"></td>
+						<td ng-bind="ticket.arrivalDate | date: 'MM/dd/yyyy HH:mm'"></td>
+						<td ng-bind="ticket.price | currency"></td>
+						<td>
+							<img ng-src="{{ticket.imageURL}}">
+							<span ng-bind="ticket.company"/>
+						</td>
+						<td><button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapseVolta" aria-expanded="false" aria-controls="collapseVolta" ng-click="chooseBack(ticket)">Selecionar</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>	
+	
+	<button class="btn btn-success" ng-click="addToCart()" ng-disabled="!travel.go || (filter.type=='both' && !travel.back)">Comprar</button>
+</div>
+</div>

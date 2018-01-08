@@ -1,0 +1,74 @@
+<div class="container">
+	<div class="card col-sm-8 col-centered" ng-show="true">
+		<div class="card-body">
+			<h5 class="card-title">Seu carrinho de compras</h5>		
+
+			<div class="row" ng-repeat="item in cart">
+				<div class="col-md-5">
+					<div class="card card-body">
+						<h5 class="card-title">{{item.go.source}} x {{item.go.destination}}</h5>
+						<div class="row">
+							<div class="col-md-8 card-text">Distância</div>
+							<div class="col-md-4 card-text">{{item.go.distance}}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8 card-text">Companhia</div>
+							<div class="col-md-4 card-text">{{item.go.company}}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8 card-text">Preço</div>
+							<div class="col-md-4 card-text">{{item.go.price}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="card card-body">
+						<h5 class="card-title">{{item.back.source}} x {{item.back.destination}}</h5>
+						<div class="row">
+							<div class="col-md-8 card-text">Distância</div>
+							<div class="col-md-4 card-text">{{item.back.distance}}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8 card-text">Companhia</div>
+							<div class="col-md-4 card-text">{{item.back.company}}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-8 card-text">Preço</div>
+							<div class="col-md-4 card-text">{{item.back.price}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-danger">X Remover</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card col-sm-8 col-centered" ng-show="true">
+		<div class="card-body">
+			<h5 class="card-title">Dados para pagamento</h5>		
+			<div class="row">
+				<div class="form-group col-md-4">Forma de pagamento</div>
+				<div class="form-group col-md-8">
+					<select class="form-control">
+						<option>Cartão de crédito</option>
+						<option>Bit Coin</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-4">Valor total:</div>
+				<div class="form-group col-md-8 right-align">R$ 2,00</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-4">
+					<button class="btn btn-outline-primary form-control" ng-click="keepShopping()">Continuar comprando</button>
+				</div>
+				<div class="form-group col-md-8">
+					<button class="btn btn-success form-control">Finalizar compra</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
