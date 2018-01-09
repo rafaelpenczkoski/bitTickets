@@ -1,51 +1,57 @@
 <div class="container">
-	<div class="card col-sm-8 col-centered" ng-show="true">
+	<div class="card col-sm-8 col-centered card-blue" ng-show="true">
 		<div class="card-body">
 			<h5 class="card-title">Seu carrinho de compras</h5>		
+
+			<div class="alert alert-warning col-sm-12 col-centered" role="alert" ng-show="cantFinish(cart)">
+			  Ainda não há itens no seu carrinho.
+			</div>
 
 			<div class="row" ng-repeat="item in cart">
 				<div class="col-md-5">
 					<div class="card card-body">
 						<h5 class="card-title">{{item.go.source}} x {{item.go.destination}}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">{{item.go.passengers}} passageiro(s)</h6>
 						<div class="row">
-							<div class="col-md-8 card-text">Distância</div>
-							<div class="col-md-4 card-text">{{item.go.distance}}</div>
+							<div class="col-md-6 card-text">Data</div>
+							<div class="col-md-6 card-text">{{item.go.leaveDate | date: 'dd/MM HH:mm'}}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8 card-text">Companhia</div>
-							<div class="col-md-4 card-text">{{item.go.company}}</div>
+							<div class="col-md-6 card-text">Companhia</div>
+							<div class="col-md-6 card-text">{{item.go.company}}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8 card-text">Preço</div>
-							<div class="col-md-4 card-text">{{item.go.price}}</div>
+							<div class="col-md-6 card-text">Preço unit.</div>
+							<div class="col-md-6 card-text">{{item.go.price | currency}}</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-5">
 					<div class="card card-body">
-						<h5 class="card-title">{{item.back.source}} x {{item.back.destination}}</h5>
+						<h5 class="card-title">{{item.back.destination}} x {{item.back.source}}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">{{item.go.passengers}} passageiro(s)</h6>
 						<div class="row">
-							<div class="col-md-8 card-text">Distância</div>
-							<div class="col-md-4 card-text">{{item.back.distance}}</div>
+							<div class="col-md-6 card-text">Data</div>
+							<div class="col-md-6 card-text">{{item.back.leaveDate | date: 'dd/MM HH:mm'}}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8 card-text">Companhia</div>
-							<div class="col-md-4 card-text">{{item.back.company}}</div>
+							<div class="col-md-6 card-text">Companhia</div>
+							<div class="col-md-6 card-text">{{item.back.company}}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8 card-text">Preço</div>
-							<div class="col-md-4 card-text">{{item.back.price}}</div>
+							<div class="col-md-6 card-text">Preço unit.</div>
+							<div class="col-md-6 card-text">{{item.back.price | currency}}</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-2">
-					<button class="btn btn-danger">X Remover</button>
+					<button class="btn btn-danger btn-remove" ng-click="removeCartItem(item)">X Remover</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="card col-sm-8 col-centered" ng-show="true">
+	<div class="card col-sm-8 col-centered card-blue" ng-show="true">
 		<div class="card-body">
 			<h5 class="card-title">Dados para pagamento</h5>		
 			<div class="row">
@@ -58,15 +64,15 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="form-group col-md-4">Valor total:</div>
-				<div class="form-group col-md-8 right-align">R$ 2,00</div>
+				<div class="form-group col-md-10">Valor total:</div>
+				<div class="form-group col-md-2 ">{{total | currency}}</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-md-4">
 					<button class="btn btn-outline-primary form-control" ng-click="keepShopping()">Continuar comprando</button>
 				</div>
 				<div class="form-group col-md-8">
-					<button class="btn btn-success form-control">Finalizar compra</button>
+					<button class="btn btn-success form-control" ng-disabled="cantFinish(cart)">Finalizar compra</button>
 				</div>
 			</div>
 		</div>

@@ -7,6 +7,7 @@ angular.module("bitTickets").service('googlePlacesService', function() {
                 var address = place.formatted_address;
                 var latitude = place.geometry.location.A;
                 var longitude = place.geometry.location.F;
+                //solution to avoid model without data
                 filter.source = address;
             });
     };
@@ -18,10 +19,10 @@ angular.module("bitTickets").service('googlePlacesService', function() {
                 var address = place.formatted_address;
                 var latitude = place.geometry.location.A;
                 var longitude = place.geometry.location.F;
+                //solution to avoid model without data
                 filter.destination = address;
             });
     };
-
     
     this.getDistance = function (scope, filter, callback) {
     	var directionsService = new google.maps.DirectionsService();
@@ -47,6 +48,6 @@ angular.module("bitTickets").service('googlePlacesService', function() {
 		  	}
             scope.$apply();
 		});
-    }
-    
+    }   
+
 });

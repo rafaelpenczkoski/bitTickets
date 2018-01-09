@@ -1,30 +1,21 @@
-angular.module("bitTickets").controller("ticketsCtrl", function($scope, $location, googlePlacesService, ticketsService) {
+angular.module("bitTickets").controller("ticketsCtrl", function($scope, $location, $anchorScroll, googlePlacesService, ticketsService, cartService) {
 
-	$scope.filter = JSON.parse(localStorage.getItem('filter'));
-	if ($scope.filter == null) {
-		$scope.filter = {
-			type: "both",
-			undefinedDate: false,
-			passengers: 1,
-			source: "",
-			destination: "",
-			start: "",
-			end: ""
-		};	
-	};
-
+	$scope.filter = ticketsService.getFilter();
 	$scope.travel = {
 		go: null,
 		back: null
 	}
 
-	$scope.addToCart = function () {
+	$scope.addCartItem = function (item) {
+		cartService.addCartItem(item);
 		$location.path("/cart");
-	};
+	}
 
 	$scope.searchTickets = function(filter) {
 		googlePlacesService.getDistance($scope, filter, function(distance) {
 			//generate ticket to simulate a filter
+			//generating 6 flights per day per company.
+			//The price is calculated based on distance returned by google places
 			ticketsService.clearTickets();
 
 			var companies = ticketsService.getCompanies();
@@ -36,19 +27,22 @@ angular.module("bitTickets").controller("ticketsCtrl", function($scope, $locatio
 					var ticket = {
 						leaveDate: now.setHours(j),
 						arrivalDate: now.setHours(j + 1),
+						source: filter.source,
+						destination: filter.destination,
+						passengers: filter.passengers,
 						company: companies[i].companyName,
 						imageURL: companies[i].imageURL,
 						price: (Number(distance) * companies[i].pricePerKm)
 					};
 					ticketsService.addTicket(ticket);	
-				};
-			};
+				}
+			}
 			
 			$scope.tickets = ticketsService.getTickets();
-			localStorage.setItem('filter', JSON.stringify(filter));
+			ticketsService.saveFilter(filter);
 		});
 		
-	};
+	}
 
 	$scope.chooseGo = function (ticket) {
 		ticket.selected = true;

@@ -1,7 +1,7 @@
 angular.module("bitTickets").service('ticketsService', function() {
-  var ticketList = [];
+  	var ticketList = [];
 
-  var companyList = [
+  	var companyList = [
 		{
 			companyName: "LATAM",
 			imageURL: "resources/latam.png",
@@ -24,27 +24,56 @@ angular.module("bitTickets").service('ticketsService', function() {
 		},
 	];
 
-  var addTicket = function(newTicket) {
-      ticketList.push(newTicket);
-  };
+	var getFilter = function () {
+		var filter;
+		try {
+			filter = JSON.parse(localStorage.getItem('filter'));
+		} catch (ex) {
+        	filter = null;
+      	}
+		// set default values for filter if there's no data on localStorage
+		if (filter == null) {
+			filter = {
+				type: "both",
+				undefinedDate: false,
+				passengers: 1,
+				source: "",
+				destination: "",
+				start: "",
+				end: ""
+			};	
+		}
+		return filter;
+	}
 
-  var getTickets = function(){
-      return ticketList;
-  };
+	//save user filter data
+	var saveFilter = function (filter) {
+		localStorage.setItem('filter', JSON.stringify(filter));
+	}
 
-  var getCompanies = function(){
-      return companyList;
-  };
+  	var addTicket = function(newTicket) {
+      	ticketList.push(newTicket);
+  	}
 
-  var clearTickets = function(){
-      ticketList = [];
-  };
+  	var getTickets = function(){
+      	return ticketList;
+  	}
 
-  return {
-    addTicket: addTicket,
-    getTickets: getTickets,
-    getCompanies: getCompanies,
-    clearTickets: clearTickets
-  };
+  	var getCompanies = function(){
+      	return companyList;
+  	}
+
+  	var clearTickets = function(){
+      	ticketList = [];
+  	}
+
+  	return {
+    	addTicket: addTicket,
+    	getTickets: getTickets,
+    	getCompanies: getCompanies,
+    	clearTickets: clearTickets,
+    	getFilter: getFilter,
+    	saveFilter: saveFilter
+  	}
 
 });

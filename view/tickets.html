@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="card col-sm-8 col-centered card-filter">
+	<div class="card col-sm-8 col-centered card-blue">
 		<div class="card-body">
 			<form ng-submit="searchTickets(filter)" name="filterForm">
 				<div class="row">
@@ -64,7 +64,7 @@
   Não foi localizada nenhuma rota com origem em {{filter.source}} e destino em {{filter.destination}}.
 </div>	
 
-<div class="card col-sm-8 col-centered" ng-show="tickets && !filter.error">
+<div class="card col-sm-8 col-centered card-blue" ng-show="tickets && !filter.error">
 	<div class="card-body">
 		<h5 class="card-title">{{filter.start}} x {{filter.end}}</h5>
 		<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseIda" aria-expanded="false" aria-controls="collapseIda">
@@ -133,6 +133,6 @@
 		</div>
 	</div>	
 	
-	<button class="btn btn-success" ng-click="addToCart()" ng-disabled="!travel.go || (filter.type=='both' && !travel.back)">Comprar</button>
+	<button class="btn btn-success" ng-click="addCartItem(travel)" ng-disabled="!travel.go || (filter.type=='both' && !travel.back)">Comprar</button>
 </div>
 </div>
