@@ -26,7 +26,10 @@ angular.module("bitTickets").controller("cartCtrl", function($scope, $location, 
 		$scope.total = 0;
       	if (cart && cart.length > 0) {
         	for (var i = 0; i < cart.length; i++) {
-          		$scope.total += (cart[i].go.price * cart[i].go.passengers) + (cart[i].back.price * cart[i].back.passengers);
+          		$scope.total += (cart[i].go.price * cart[i].go.passengers);
+          		if (cart[i].back) {
+          			$scope.total += (cart[i].back.price * cart[i].back.passengers);
+          		};
         	}
       	}
 	}

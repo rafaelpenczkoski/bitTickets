@@ -33,11 +33,10 @@ angular.module("bitTickets").service('cartService', function() {
         	console.log("exception");
       	}
       	if (cart != null) {
-      		console.log("cart:" + cart);
       		cart = cart.filter(function(cartItem) {
-      			if (cartItem.go.source != item.go.source || cartItem.back.source != item.back.source
-      			  	||cartItem.go.leaveDate != item.go.leaveDate || cartItem.back.leaveDate != item.back.leaveDate
-      			  	||cartItem.go.arrivalDate != item.go.arrivalDate || cartItem.back.arrivalDate != item.back.arrivalDate) return cartItem;
+      			if (cartItem.go.source != item.go.source 
+      			  	||cartItem.go.leaveDate != item.go.leaveDate 
+      			  	||cartItem.go.arrivalDate != item.go.arrivalDate) return cartItem;
       		});
       		localStorage.setItem('cart', JSON.stringify(cart));
       	}

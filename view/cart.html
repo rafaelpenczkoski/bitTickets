@@ -27,7 +27,7 @@
 					</div>
 				</div>
 				<div class="col-md-5">
-					<div class="card card-body">
+					<div class="card card-body" ng-show="item.back">
 						<h5 class="card-title">{{item.back.destination}} x {{item.back.source}}</h5>
 						<h6 class="card-subtitle mb-2 text-muted">{{item.go.passengers}} passageiro(s)</h6>
 						<div class="row">
@@ -72,7 +72,7 @@
 					<button class="btn btn-outline-primary form-control" ng-click="keepShopping()">Continuar comprando</button>
 				</div>
 				<div class="form-group col-md-8">
-					<button class="btn btn-success form-control" ng-disabled="cantFinish(cart)">Finalizar compra</button>
+					<button class="btn btn-success form-control" ng-disabled="cantFinish(cart)" ng-click="finalizarCompra()">Finalizar compra</button>
 				</div>
 			</div>
 		</div>
